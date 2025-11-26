@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <title>Ficha del inmueble</title>
+  <style>
+    body{font-family:Arial,Helvetica,sans-serif;background:#f5f5f5;margin:0;padding:2rem}
+    .card{background:#fff;max-width:600px;margin:auto;padding:2rem;border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,.15)}
+    h1{color:#0059a0;margin-top:0}
+    table{width:100%;border-collapse:collapse;margin:1.5rem 0}
+    td{padding:.6rem 0;border-bottom:1px solid #ddd}
+    td:first-child{font-weight:600;width:30%}
+    .btn{display:inline-block;background:#0059a0;color:#fff;padding:.8rem 1.4rem;text-decoration:none;border-radius:4px;margin:.3rem}
+    .btn:hover{background:#004276}
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1 id="titulo">Cargando…</h1>
+    <table>
+      <tr><td>Cuenta</td><td id="cuenta"></td></tr>
+      <tr><td>Parcela</td><td id="parcela"></td></tr>
+      <tr><td>Título</td><td id="titulo2"></td></tr>
+      <tr><td>Ubicación</td><td id="ubicacion"></td></tr>
+    </table>
+
+    <a href="plano.pdf"       class="btn" target="_blank">📄 Descargar plano</a>
+    <a href="seguimiento.pdf" class="btn" target="_blank">📄 Descargar seguimiento</a>
+  </div>
+
+  <script>
+    fetch('datos.json')
+      .then(r => r.json())
+      .then(d => {
+        document.getElementById('titulo').textContent = 'Inmueble – ' + d.parcela;
+        document.getElementById('cuenta').textContent = d.cuenta;
+        document.getElementById('parcela').textContent = d.parcela;
+        document.getElementById('titulo2').textContent = d.titulo;
+        document.getElementById('ubicacion').textContent = d.ubicacion;
+      })
+      .catch(err => {
+        document.body.innerHTML = '<h2>Error al cargar los datos</h2>';
+        console.error(err);
+      });
+  </script>
+</body>
+</html>
